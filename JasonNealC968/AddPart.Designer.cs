@@ -293,7 +293,7 @@
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(602, 486);
+            ClientSize = new Size(582, 465);
             Controls.Add(partMachineIdNumericUpDown);
             Controls.Add(partMinNumericUpDown);
             Controls.Add(partMaxNumericUpDown);

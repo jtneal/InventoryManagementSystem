@@ -17,20 +17,18 @@ namespace JasonNealC968.Validators
 
         public bool Validate()
         {
-            bool valid = true;
+            bool isValid = true;
 
             foreach (var control in controls)
             {
-                bool isNumeric = decimal.TryParse(control.Text, out _);
-
-                if (!isNumeric)
+                if (!decimal.TryParse(control.Text, out _))
                 {
                     control.BackColor = Color.LightCoral;
-                    valid = false;
+                    isValid = false;
                 }
             }
 
-            return valid;
+            return isValid;
         }
     }
 }

@@ -8,28 +8,28 @@ namespace JasonNealC968.Validators
 {
     public class MinMaxValidator : IValidator
     {
-        private readonly NumericUpDown field;
+        private readonly NumericUpDown control;
         private readonly NumericUpDown min;
         private readonly NumericUpDown max;
 
-        public MinMaxValidator(NumericUpDown field, NumericUpDown min, NumericUpDown max)
+        public MinMaxValidator(NumericUpDown control, NumericUpDown min, NumericUpDown max)
         {
-            this.field = field;
+            this.control = control;
             this.min = min;
             this.max = max;
         }
 
         public bool Validate()
         {
-            bool valid = true;
+            bool isValid = true;
 
-            if (field.Value < min.Value || field.Value > max.Value)
+            if (control.Value < min.Value || control.Value > max.Value)
             {
-                field.BackColor = Color.LightCoral;
-                valid = false;
+                control.BackColor = Color.LightCoral;
+                isValid = false;
             }
 
-            return valid;
+            return isValid;
         }
     }
 }

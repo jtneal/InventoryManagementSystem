@@ -1,5 +1,4 @@
-﻿using JasonNealC968.Constants;
-using JasonNealC968.Mappers;
+﻿using JasonNealC968.Mappers;
 using JasonNealC968.Models;
 using System;
 using System.Collections.Generic;
@@ -37,20 +36,12 @@ namespace JasonNealC968.DAL
 
         public bool removeProduct(int productID)
         {
-            var product = context.Products.Find(productID);
+            var productEntity = context.Products.Find(productID);
 
-            if (product is null)
+            if (productEntity is null)
                 return false;
 
-            context.Products.Remove(new ProductEntity()
-            {
-                ProductID = product.ProductID,
-                Name = product.Name,
-                Price = product.Price,
-                InStock = product.InStock,
-                Min = product.Min,
-                Max = product.Max,
-            });
+            context.Products.Remove(productEntity);
             context.SaveChanges();
 
             return true;
@@ -80,7 +71,9 @@ namespace JasonNealC968.DAL
 
             if (productEntity is null)
             {
-                // I could try adding instead
+                // I don't want to lose data if someone saves and somehow a
+                // product no longer existed, so I just create a new one
+                addProduct(product);
                 return;
             }
 
@@ -103,7 +96,12 @@ namespace JasonNealC968.DAL
 
         public bool deletePart(Part part)
         {
-            context.Parts.Remove(PartMapper.ToPartEntity(part));
+            var partEntity = context.Parts.Find(part.PartID);
+
+            if (partEntity is null)
+                return false;
+
+            context.Parts.Remove(partEntity);
             context.SaveChanges();
 
             return true;

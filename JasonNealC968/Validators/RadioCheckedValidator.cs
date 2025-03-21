@@ -8,16 +8,16 @@ namespace JasonNealC968.Validators
 {
     public class RadioCheckedValidator : IValidator
     {
-        private readonly RadioButton[] fields;
+        private readonly RadioButton[] controls;
 
         public RadioCheckedValidator(RadioButton[] fields)
         {
-            this.fields = fields;
+            this.controls = fields;
         }
 
         public bool Validate()
         {
-            return fields.Any(x => x.Checked);
+            return controls.Any(x => x.Checked);
         }
     }
 }

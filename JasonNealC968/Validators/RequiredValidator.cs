@@ -8,23 +8,23 @@ namespace JasonNealC968.Validators
 {
     public class RequiredValidator : IValidator
     {
-        private readonly List<Control> requiredFields;
+        private readonly Control[] controls;
 
-        public RequiredValidator(List<Control> requiredFields)
+        public RequiredValidator(Control[] controls)
         {
-            this.requiredFields = requiredFields;
+            this.controls = controls;
         }
 
         public bool Validate()
         {
-            bool valid = true;
+            bool isValid = true;
 
-            foreach (var field in requiredFields)
+            foreach (var field in controls)
             {
                 if (string.IsNullOrEmpty(field.Text))
                 {
                     field.BackColor = Color.LightCoral;
-                    valid = false;
+                    isValid = false;
                 }
                 else
                 {
@@ -32,7 +32,7 @@ namespace JasonNealC968.Validators
                 }
             }
 
-            return valid;
+            return isValid;
         }
     }
 }
