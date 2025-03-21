@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JasonNealC968.Validators
+namespace JasonNealC968.Models
 {
-    public interface IValidator
+    public class Inhouse : Part
     {
-        public bool Validate();
+        public int MachineID { get; set; }
     }
 }

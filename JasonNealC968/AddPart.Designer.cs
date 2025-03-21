@@ -34,7 +34,6 @@
             partIdTextBox = new TextBox();
             partNameTextBox = new TextBox();
             partPriceTextBox = new TextBox();
-            partMachineIdTextBox = new TextBox();
             partIdLabel = new Label();
             partNameLabel = new Label();
             partInventoryLabel = new Label();
@@ -49,9 +48,11 @@
             partInventoryNumericUpDown = new NumericUpDown();
             partMaxNumericUpDown = new NumericUpDown();
             partMinNumericUpDown = new NumericUpDown();
+            partMachineIdNumericUpDown = new NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)partInventoryNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)partMaxNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)partMinNumericUpDown).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)partMachineIdNumericUpDown).BeginInit();
             SuspendLayout();
             // 
             // addPartLabel
@@ -125,17 +126,6 @@
             partPriceTextBox.Size = new Size(183, 27);
             partPriceTextBox.TabIndex = 6;
             partPriceTextBox.TextChanged += textBox_TextChanged;
-            // 
-            // partMachineIdTextBox
-            // 
-            partMachineIdTextBox.BorderStyle = BorderStyle.FixedSingle;
-            partMachineIdTextBox.Font = new Font("Segoe UI", 11F);
-            partMachineIdTextBox.Location = new Point(210, 309);
-            partMachineIdTextBox.Margin = new Padding(4);
-            partMachineIdTextBox.Name = "partMachineIdTextBox";
-            partMachineIdTextBox.Size = new Size(183, 27);
-            partMachineIdTextBox.TabIndex = 9;
-            partMachineIdTextBox.Visible = false;
             // 
             // partIdLabel
             // 
@@ -237,6 +227,7 @@
             partCompanyNameTextBox.Size = new Size(183, 27);
             partCompanyNameTextBox.TabIndex = 10;
             partCompanyNameTextBox.Visible = false;
+            partCompanyNameTextBox.TextChanged += textBox_TextChanged;
             // 
             // partSaveButton
             // 
@@ -290,11 +281,20 @@
             partMinNumericUpDown.TabIndex = 21;
             partMinNumericUpDown.ValueChanged += textBox_TextChanged;
             // 
-            // AddPartForm
+            // partMachineIdNumericUpDown
+            // 
+            partMachineIdNumericUpDown.Location = new Point(210, 308);
+            partMachineIdNumericUpDown.Name = "partMachineIdNumericUpDown";
+            partMachineIdNumericUpDown.Size = new Size(184, 29);
+            partMachineIdNumericUpDown.TabIndex = 22;
+            partMachineIdNumericUpDown.ValueChanged += textBox_TextChanged;
+            // 
+            // AddPart
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(602, 486);
+            Controls.Add(partMachineIdNumericUpDown);
             Controls.Add(partMinNumericUpDown);
             Controls.Add(partMaxNumericUpDown);
             Controls.Add(partInventoryNumericUpDown);
@@ -309,7 +309,6 @@
             Controls.Add(partInventoryLabel);
             Controls.Add(partNameLabel);
             Controls.Add(partIdLabel);
-            Controls.Add(partMachineIdTextBox);
             Controls.Add(partPriceTextBox);
             Controls.Add(partNameTextBox);
             Controls.Add(partIdTextBox);
@@ -318,11 +317,12 @@
             Controls.Add(addPartLabel);
             Font = new Font("Segoe UI", 12F);
             Margin = new Padding(4);
-            Name = "AddPartForm";
+            Name = "AddPart";
             Text = "Part";
             ((System.ComponentModel.ISupportInitialize)partInventoryNumericUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)partMaxNumericUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)partMinNumericUpDown).EndInit();
+            ((System.ComponentModel.ISupportInitialize)partMachineIdNumericUpDown).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -335,7 +335,6 @@
         private TextBox partIdTextBox;
         private TextBox partNameTextBox;
         private TextBox partPriceTextBox;
-        private TextBox partMachineIdTextBox;
         private Label partIdLabel;
         private Label partNameLabel;
         private Label partInventoryLabel;
@@ -350,5 +349,6 @@
         private NumericUpDown partInventoryNumericUpDown;
         private NumericUpDown partMaxNumericUpDown;
         private NumericUpDown partMinNumericUpDown;
+        private NumericUpDown partMachineIdNumericUpDown;
     }
 }

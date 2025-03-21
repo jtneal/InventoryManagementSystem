@@ -6,22 +6,22 @@ namespace JasonNealC968;
 
 public partial class ModifyPart : Form
 {
-    protected readonly InventoryContext context;
+    protected readonly Inventory inventory;
     private readonly int partID;
     private Part? part;
 
-    public ModifyPart(InventoryContext context, int partID)
+    public ModifyPart(Inventory inventory, int partID)
     {
-        this.context = context;
+        this.inventory = inventory;
         this.partID = partID;
         InitializeComponent();
     }
 
     private void ModifyPart_Load(object sender, EventArgs e)
     {
-        part = context.Parts.Find(partID);
+        part = inventory.lookupPart(partID);
 
-        if (part is null)
+        if (part.PartID != partID)
         {
             Close();
             return;
@@ -29,14 +29,22 @@ public partial class ModifyPart : Form
 
         partIdTextBox.Text = part.PartID.ToString();
         partNameTextBox.Text = part.Name;
-        partInventoryNumericUpDown.Text = part.Inventory.ToString();
+        partInventoryNumericUpDown.Text = part.InStock.ToString();
         partPriceTextBox.Text = part.Price.ToString();
         partMaxNumericUpDown.Text = part.Max.ToString();
         partMinNumericUpDown.Text = part.Min.ToString();
-        partMachineIdTextBox.Text = part.MachineId;
-        partCompanyNameTextBox.Text = part.CompanyName;
-        inHouseRadioButton.Checked = part.Category == "In-House";
-        outsourcedRadioButton.Checked = part.Category == "Outsourced";
+
+        if (part is Outsourced outsourced)
+        {
+            partCompanyNameTextBox.Text = outsourced.CompanyName;
+            outsourcedRadioButton.Checked = true;
+        }
+        else if (part is Inhouse inhouse)
+        {
+            partMachineIdNumericUpDown.Text = inhouse.MachineID.ToString();
+            inHouseRadioButton.Checked = true;
+        }
+
         radioButton_CheckedChanged(this, new EventArgs());
     }
 
@@ -49,9 +57,17 @@ public partial class ModifyPart : Form
                 partPriceTextBox,
                 partMaxNumericUpDown,
                 partMinNumericUpDown,
+                outsourcedRadioButton.Checked ? partCompanyNameTextBox : partMachineIdNumericUpDown,
             ]),
+            new RadioCheckedValidator([inHouseRadioButton, outsourcedRadioButton]),
             new MinMaxValidator(partInventoryNumericUpDown, partMinNumericUpDown, partMaxNumericUpDown),
-            new NumericValidator(partPriceTextBox),
+            new DecimalValidator([partPriceTextBox]),
+            new IntegerValidator([
+                partInventoryNumericUpDown,
+                partMaxNumericUpDown,
+                partMinNumericUpDown,
+                partMachineIdNumericUpDown,
+            ]),
         ]);
 
         return validators.Validate();
@@ -64,21 +80,18 @@ public partial class ModifyPart : Form
 
     protected void partSaveButton_Click(object sender, EventArgs e)
     {
-        if (part is null)
-        {
-            Close();
-            return;
-        }
+        Part newPart = outsourcedRadioButton.Checked
+            ? new Outsourced() { CompanyName = partCompanyNameTextBox.Text }
+            : new Inhouse() { MachineID = Convert.ToInt32(partMachineIdNumericUpDown.Text) };
 
-        part.Name = partNameTextBox.Text;
-        part.Inventory = Convert.ToInt32(partInventoryNumericUpDown.Value);
-        part.Price = decimal.Parse(partPriceTextBox.Text);
-        part.Min = Convert.ToInt32(partMinNumericUpDown.Value);
-        part.Max = Convert.ToInt32(partMaxNumericUpDown.Value);
-        part.Category = Controls.OfType<RadioButton>().FirstOrDefault(x => x.Checked)?.Text;
-        part.MachineId = partMachineIdTextBox.Text;
-        part.CompanyName = partCompanyNameTextBox.Text;
-        context.SaveChanges();
+        newPart.PartID = part!.PartID; // Need PartID set to bind the update
+        newPart.Name = partNameTextBox.Text;
+        newPart.InStock = Convert.ToInt32(partInventoryNumericUpDown.Value);
+        newPart.Price = decimal.Parse(partPriceTextBox.Text);
+        newPart.Min = Convert.ToInt32(partMinNumericUpDown.Value);
+        newPart.Max = Convert.ToInt32(partMaxNumericUpDown.Value);
+
+        inventory.updatePart(partID, newPart);
         Close();
     }
 
@@ -90,8 +103,9 @@ public partial class ModifyPart : Form
     protected void radioButton_CheckedChanged(object sender, EventArgs e)
     {
         partMachineIdLabel.Visible = inHouseRadioButton.Checked;
-        partMachineIdTextBox.Visible = inHouseRadioButton.Checked;
+        partMachineIdNumericUpDown.Visible = inHouseRadioButton.Checked;
         partCompanyNameLabel.Visible = outsourcedRadioButton.Checked;
         partCompanyNameTextBox.Visible = outsourcedRadioButton.Checked;
+        partSaveButton.Enabled = IsFormValid();
     }
 }

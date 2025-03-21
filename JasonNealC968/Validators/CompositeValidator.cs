@@ -1,26 +1,33 @@
-﻿namespace JasonNealC968.Validators;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-public class CompositeValidator : IValidator
+namespace JasonNealC968.Validators
 {
-    private readonly List<IValidator> validators;
-
-    public CompositeValidator(List<IValidator> validators)
+    public class CompositeValidator : IValidator
     {
-        this.validators = validators;
-    }
+        private readonly List<IValidator> validators;
 
-    public bool Validate()
-    {
-        var isFormValid = true;
-
-        foreach (var validator in validators)
+        public CompositeValidator(List<IValidator> validators)
         {
-            if (!validator.Validate())
-            {
-                isFormValid = false;
-            }
+            this.validators = validators;
         }
 
-        return isFormValid;
+        public bool Validate()
+        {
+            var isFormValid = true;
+
+            foreach (var validator in validators)
+            {
+                if (!validator.Validate())
+                {
+                    isFormValid = false;
+                }
+            }
+
+            return isFormValid;
+        }
     }
 }

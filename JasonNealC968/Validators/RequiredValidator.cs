@@ -1,31 +1,38 @@
-﻿namespace JasonNealC968.Validators;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-public class RequiredValidator : IValidator
+namespace JasonNealC968.Validators
 {
-    private readonly List<Control> requiredFields;
-
-    public RequiredValidator(List<Control> requiredFields)
+    public class RequiredValidator : IValidator
     {
-        this.requiredFields = requiredFields;
-    }
+        private readonly List<Control> requiredFields;
 
-    public bool Validate()
-    {
-        bool valid = true;
-
-        foreach (var field in requiredFields)
+        public RequiredValidator(List<Control> requiredFields)
         {
-            if (string.IsNullOrEmpty(field.Text))
-            {
-                field.BackColor = Color.LightCoral;
-                valid = false;
-            }
-            else
-            {
-                field.BackColor = Color.White;
-            }
+            this.requiredFields = requiredFields;
         }
 
-        return valid;
+        public bool Validate()
+        {
+            bool valid = true;
+
+            foreach (var field in requiredFields)
+            {
+                if (string.IsNullOrEmpty(field.Text))
+                {
+                    field.BackColor = Color.LightCoral;
+                    valid = false;
+                }
+                else
+                {
+                    field.BackColor = Color.White;
+                }
+            }
+
+            return valid;
+        }
     }
 }

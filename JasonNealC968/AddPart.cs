@@ -6,11 +6,11 @@ namespace JasonNealC968;
 
 public partial class AddPart : Form
 {
-    protected readonly InventoryContext context;
+    protected readonly Inventory inventory;
 
-    public AddPart(InventoryContext context)
+    public AddPart(Inventory inventory)
     {
-        this.context = context;
+        this.inventory = inventory;
         InitializeComponent();
     }
 
@@ -23,9 +23,17 @@ public partial class AddPart : Form
                 partPriceTextBox,
                 partMaxNumericUpDown,
                 partMinNumericUpDown,
+                outsourcedRadioButton.Checked ? partCompanyNameTextBox : partMachineIdNumericUpDown,
             ]),
+            new RadioCheckedValidator([inHouseRadioButton, outsourcedRadioButton]),
             new MinMaxValidator(partInventoryNumericUpDown, partMinNumericUpDown, partMaxNumericUpDown),
-            new NumericValidator(partPriceTextBox),
+            new DecimalValidator([partPriceTextBox]),
+            new IntegerValidator([
+                partInventoryNumericUpDown,
+                partMaxNumericUpDown,
+                partMinNumericUpDown,
+                partMachineIdNumericUpDown,
+            ]),
         ]);
 
         return validators.Validate();
@@ -36,21 +44,19 @@ public partial class AddPart : Form
         Close();
     }
 
-    protected virtual void partSaveButton_Click(object sender, EventArgs e)
+    protected void partSaveButton_Click(object sender, EventArgs e)
     {
-        context.Parts.Add(new Part
-        {
-            Name = partNameTextBox.Text,
-            Inventory = Convert.ToInt32(partInventoryNumericUpDown.Value),
-            Price = decimal.Parse(partPriceTextBox.Text),
-            Min = Convert.ToInt32(partMinNumericUpDown.Value),
-            Max = Convert.ToInt32(partMaxNumericUpDown.Value),
-            Category = Controls.OfType<RadioButton>().FirstOrDefault(x => x.Checked)?.Text,
-            MachineId = partMachineIdTextBox.Text,
-            CompanyName = partCompanyNameTextBox.Text,
-        });
+        Part part = outsourcedRadioButton.Checked
+            ? new Outsourced() { CompanyName = partCompanyNameTextBox.Text }
+            : new Inhouse() { MachineID = Convert.ToInt32(partMachineIdNumericUpDown.Text) };
 
-        context.SaveChanges();
+        part.Name = partNameTextBox.Text;
+        part.InStock = Convert.ToInt32(partInventoryNumericUpDown.Value);
+        part.Price = decimal.Parse(partPriceTextBox.Text);
+        part.Min = Convert.ToInt32(partMinNumericUpDown.Value);
+        part.Max = Convert.ToInt32(partMaxNumericUpDown.Value);
+
+        inventory.addPart(part);
         Close();
     }
 
@@ -62,8 +68,9 @@ public partial class AddPart : Form
     protected void radioButton_CheckedChanged(object sender, EventArgs e)
     {
         partMachineIdLabel.Visible = inHouseRadioButton.Checked;
-        partMachineIdTextBox.Visible = inHouseRadioButton.Checked;
+        partMachineIdNumericUpDown.Visible = inHouseRadioButton.Checked;
         partCompanyNameLabel.Visible = outsourcedRadioButton.Checked;
         partCompanyNameTextBox.Visible = outsourcedRadioButton.Checked;
+        partSaveButton.Enabled = IsFormValid();
     }
 }

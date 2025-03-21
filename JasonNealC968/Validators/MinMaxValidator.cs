@@ -1,28 +1,35 @@
-﻿namespace JasonNealC968.Validators;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-public class MinMaxValidator : IValidator
+namespace JasonNealC968.Validators
 {
-    private readonly NumericUpDown field;
-    private readonly NumericUpDown min;
-    private readonly NumericUpDown max;
-
-    public MinMaxValidator(NumericUpDown field, NumericUpDown min, NumericUpDown max)
+    public class MinMaxValidator : IValidator
     {
-        this.field = field;
-        this.min = min;
-        this.max = max;
-    }
+        private readonly NumericUpDown field;
+        private readonly NumericUpDown min;
+        private readonly NumericUpDown max;
 
-    public bool Validate()
-    {
-        bool valid = true;
-
-        if (field.Value < min.Value || field.Value > max.Value)
+        public MinMaxValidator(NumericUpDown field, NumericUpDown min, NumericUpDown max)
         {
-            field.BackColor = Color.LightCoral;
-            valid = false;
+            this.field = field;
+            this.min = min;
+            this.max = max;
         }
 
-        return valid;
+        public bool Validate()
+        {
+            bool valid = true;
+
+            if (field.Value < min.Value || field.Value > max.Value)
+            {
+                field.BackColor = Color.LightCoral;
+                valid = false;
+            }
+
+            return valid;
+        }
     }
 }

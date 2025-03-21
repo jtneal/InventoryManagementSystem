@@ -42,16 +42,17 @@
             partInventoryLabel = new Label();
             partNameLabel = new Label();
             partIdLabel = new Label();
-            partMachineIdTextBox = new TextBox();
             partPriceTextBox = new TextBox();
             partNameTextBox = new TextBox();
             partIdTextBox = new TextBox();
             outsourcedRadioButton = new RadioButton();
             inHouseRadioButton = new RadioButton();
             addPartLabel = new Label();
+            partMachineIdNumericUpDown = new NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)partMinNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)partMaxNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)partInventoryNumericUpDown).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)partMachineIdNumericUpDown).BeginInit();
             SuspendLayout();
             // 
             // partMinNumericUpDown
@@ -133,6 +134,7 @@
             partCompanyNameTextBox.Size = new Size(183, 27);
             partCompanyNameTextBox.TabIndex = 29;
             partCompanyNameTextBox.Visible = false;
+            partCompanyNameTextBox.TextChanged += textBox_TextChanged;
             // 
             // partMinLabel
             // 
@@ -212,17 +214,6 @@
             partIdLabel.TabIndex = 31;
             partIdLabel.Text = "ID";
             // 
-            // partMachineIdTextBox
-            // 
-            partMachineIdTextBox.BorderStyle = BorderStyle.FixedSingle;
-            partMachineIdTextBox.Font = new Font("Segoe UI", 11F);
-            partMachineIdTextBox.Location = new Point(209, 309);
-            partMachineIdTextBox.Margin = new Padding(4);
-            partMachineIdTextBox.Name = "partMachineIdTextBox";
-            partMachineIdTextBox.Size = new Size(183, 27);
-            partMachineIdTextBox.TabIndex = 28;
-            partMachineIdTextBox.Visible = false;
-            // 
             // partPriceTextBox
             // 
             partPriceTextBox.BackColor = Color.LightCoral;
@@ -297,11 +288,21 @@
             addPartLabel.TabIndex = 22;
             addPartLabel.Text = "Modify Part";
             // 
+            // partMachineIdNumericUpDown
+            // 
+            partMachineIdNumericUpDown.Font = new Font("Segoe UI", 12F);
+            partMachineIdNumericUpDown.Location = new Point(209, 309);
+            partMachineIdNumericUpDown.Name = "partMachineIdNumericUpDown";
+            partMachineIdNumericUpDown.Size = new Size(183, 29);
+            partMachineIdNumericUpDown.TabIndex = 43;
+            partMachineIdNumericUpDown.ValueChanged += textBox_TextChanged;
+            // 
             // ModifyPart
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(602, 486);
+            Controls.Add(partMachineIdNumericUpDown);
             Controls.Add(partMinNumericUpDown);
             Controls.Add(partMaxNumericUpDown);
             Controls.Add(partInventoryNumericUpDown);
@@ -316,7 +317,6 @@
             Controls.Add(partInventoryLabel);
             Controls.Add(partNameLabel);
             Controls.Add(partIdLabel);
-            Controls.Add(partMachineIdTextBox);
             Controls.Add(partPriceTextBox);
             Controls.Add(partNameTextBox);
             Controls.Add(partIdTextBox);
@@ -329,6 +329,7 @@
             ((System.ComponentModel.ISupportInitialize)partMinNumericUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)partMaxNumericUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)partInventoryNumericUpDown).EndInit();
+            ((System.ComponentModel.ISupportInitialize)partMachineIdNumericUpDown).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -349,12 +350,12 @@
         private Label partInventoryLabel;
         private Label partNameLabel;
         private Label partIdLabel;
-        private TextBox partMachineIdTextBox;
         private TextBox partPriceTextBox;
         private TextBox partNameTextBox;
         private TextBox partIdTextBox;
         private RadioButton outsourcedRadioButton;
         private RadioButton inHouseRadioButton;
         private Label addPartLabel;
+        private NumericUpDown partMachineIdNumericUpDown;
     }
 }

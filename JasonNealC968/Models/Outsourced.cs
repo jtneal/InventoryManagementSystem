@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JasonNealC968.Validators
+namespace JasonNealC968.Models
 {
-    public interface IValidator
+    public class Outsourced : Part
     {
-        public bool Validate();
+        public required string CompanyName { get; set; }
     }
 }
