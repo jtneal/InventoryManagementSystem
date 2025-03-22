@@ -13,8 +13,8 @@ namespace JasonNealC968
 {
     public partial class MainScreen : Form
     {
-        private Inventory? inventory;
-        private InventoryContext? context;
+        protected Inventory? inventory;
+        protected InventoryContext? context;
 
         public MainScreen()
         {
@@ -25,7 +25,7 @@ namespace JasonNealC968
          * Form Event Handlers *
          ***********************/
 
-        private void MainScreen_Load(object sender, EventArgs e)
+        protected void MainScreen_Load(object sender, EventArgs e)
         {
             context = new InventoryContext();
             context.Database.EnsureDeleted();
@@ -56,31 +56,31 @@ namespace JasonNealC968
          * Button Event Handlers *
          *************************/
 
-        private void partsSearchButton_Click(object sender, EventArgs e)
+        protected void partsSearchButton_Click(object sender, EventArgs e)
         {
             partsDataGridView.DataSource = context!.Parts.Where(part
                 => EF.Functions.Like(part.Name, $"%{partsSearchTextBox.Text}%")).ToList();
         }
 
-        private void productsSearchButton_Click(object sender, EventArgs e)
+        protected void productsSearchButton_Click(object sender, EventArgs e)
         {
             productsDataGridView.DataSource = context!.Products.Where(product
                 => EF.Functions.Like(product.Name, $"%{productsSearchTextBox.Text}%")).ToList();
         }
 
-        private void partsAddButton_Click(object sender, EventArgs e)
+        protected void partsAddButton_Click(object sender, EventArgs e)
         {
-            var addPart = new AddPart(inventory!);
-            addPart.ShowDialog();
+            var partForm = new PartForm(inventory!);
+            partForm.ShowDialog();
         }
 
-        private void productsAddButton_Click(object sender, EventArgs e)
+        protected void productsAddButton_Click(object sender, EventArgs e)
         {
-            //var addProduct = new AddProduct(inventory!);
-            //addProduct.ShowDialog();
+            var productForm = new ProductForm(inventory!);
+            productForm.ShowDialog();
         }
 
-        private void partsModifyButton_Click(object sender, EventArgs e)
+        protected void partsModifyButton_Click(object sender, EventArgs e)
         {
             if (partsDataGridView.SelectedRows.Count == 0)
             {
@@ -97,11 +97,11 @@ namespace JasonNealC968
                 return;
             }
 
-            var modifyPart = new ModifyPart(inventory!, int.Parse(partID));
-            modifyPart.ShowDialog();
+            var partForm = new PartForm(inventory!, int.Parse(partID));
+            partForm.ShowDialog();
         }
 
-        private void productsModifyButton_Click(object sender, EventArgs e)
+        protected void productsModifyButton_Click(object sender, EventArgs e)
         {
             if (productsDataGridView.SelectedRows.Count == 0)
             {
@@ -118,11 +118,11 @@ namespace JasonNealC968
                 return;
             }
 
-            //var modifyPart = new ModifyProduct(inventory!, int.Parse(firstCell));
-            //modifyPart.ShowDialog();
+            var productForm = new ProductForm(inventory!, int.Parse(productID));
+            productForm.ShowDialog();
         }
 
-        private void partsDeleteButton_Click(object sender, EventArgs e)
+        protected void partsDeleteButton_Click(object sender, EventArgs e)
         {
             if (partsDataGridView.SelectedRows.Count == 0)
             {
@@ -149,7 +149,7 @@ namespace JasonNealC968
                 inventory!.deletePart(part);
         }
 
-        private void productsDeleteButton_Click(object sender, EventArgs e)
+        protected void productsDeleteButton_Click(object sender, EventArgs e)
         {
             if (productsDataGridView.SelectedRows.Count == 0)
             {
@@ -176,7 +176,7 @@ namespace JasonNealC968
                 inventory!.removeProduct(product.ProductID);
         }
 
-        private void exitButton_Click(object sender, EventArgs e)
+        protected void exitButton_Click(object sender, EventArgs e)
         {
             Close();
         }

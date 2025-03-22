@@ -1,4 +1,5 @@
-﻿using JasonNealC968.Mappers;
+﻿using JasonNealC968.Constants;
+using JasonNealC968.Mappers;
 using JasonNealC968.Models;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,6 @@ namespace JasonNealC968.DAL
         {
             context.Products.Add(new ProductEntity()
             {
-                ProductID = -1, // Auto-generated
                 Name = product.Name,
                 Price = product.Price,
                 InStock = product.InStock,
@@ -49,20 +49,20 @@ namespace JasonNealC968.DAL
 
         public Product lookupProduct(int productID)
         {
-            var product = context.Products.Find(productID);
+            var product = new Product();
+            var productEntity = context.Products.Find(productID);
 
-            if (product is null)
-                return new Product();
-
-            return new Product()
+            if (productEntity is not null)
             {
-                ProductID = product.ProductID,
-                Name = product.Name,
-                Price = product.Price,
-                InStock = product.InStock,
-                Min = product.Min,
-                Max = product.Max,
-            };
+                product.ProductID = productEntity.ProductID;
+                product.Name = productEntity.Name;
+                product.Price = productEntity.Price;
+                product.InStock = productEntity.InStock;
+                product.Min = productEntity.Min;
+                product.Max = productEntity.Max;
+            }
+
+            return product;
         }
 
         public void updateProduct(int productID, Product product)
@@ -71,8 +71,7 @@ namespace JasonNealC968.DAL
 
             if (productEntity is null)
             {
-                // I don't want to lose data if someone saves and somehow a
-                // product no longer existed, so I just create a new one
+                // If the product doesn't exist, let's create it!
                 addProduct(product);
                 return;
             }
@@ -109,20 +108,27 @@ namespace JasonNealC968.DAL
 
         public Part lookupPart(int partID)
         {
-            var part = context.Parts.Find(partID);
+            var partEntity = context.Parts.Find(partID);
 
-            if (part is null)
-                return new Inhouse();
-
-            return new Inhouse()
+            if (partEntity is not null)
             {
-                PartID = part.PartID,
-                Name = part.Name,
-                Price = part.Price,
-                InStock = part.InStock,
-                Min = part.Min,
-                Max = part.Max,
-            };
+                Part part = partEntity.Category == PartCategory.Outsourced
+                    ? new Outsourced() { CompanyName = partEntity.CompanyName ?? string.Empty }
+                    : new Inhouse() { MachineID = partEntity.MachineID ?? 0 };
+
+                part.PartID = partEntity.PartID;
+                part.Name = partEntity.Name;
+                part.Price = partEntity.Price;
+                part.InStock = partEntity.InStock;
+                part.Min = partEntity.Min;
+                part.Max = partEntity.Max;
+                part.Category = partEntity.Category;
+
+                return part;
+            }
+
+            // We default the category to inhouse for new parts
+            return new Inhouse();
         }
 
         public void updatePart(int partID, Part part)
@@ -131,8 +137,7 @@ namespace JasonNealC968.DAL
 
             if (partEntity is null)
             {
-                // I don't want to lose data if someone saves and somehow a
-                // part no longer existed, so I just create a new one
+                // If the part doesn't exist, let's create it!
                 addPart(part);
                 return;
             }

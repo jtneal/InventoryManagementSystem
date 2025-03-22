@@ -24,16 +24,14 @@ namespace JasonNealC968.Models
 
         public bool removeAssociatedPart(int partID)
         {
-            var part = lookupAssociatedPart(partID);
-
-            AssociatedParts.Remove(part);
+            AssociatedParts.Remove(lookupAssociatedPart(partID));
 
             return true;
         }
 
         public Part lookupAssociatedPart(int partID)
         {
-            var part = AssociatedParts.FirstOrDefault((x) => x.PartID == partID);
+            var part = AssociatedParts.First((x) => x.PartID == partID);
 
             if (part is null)
             {

@@ -9,47 +9,20 @@ using System.Threading.Tasks;
 
 namespace JasonNealC968
 {
-    public partial class ModifyPart : Form
+    public partial class PartForm : Form
     {
         protected readonly Inventory inventory;
-        private readonly int partID;
+        protected readonly int partID;
+        protected Part part;
 
-        public ModifyPart(Inventory inventory, int partID)
+        public PartForm(Inventory inventory, int partID = 0)
         {
             this.inventory = inventory;
             this.partID = partID;
+
+            part = inventory.lookupPart(partID);
+
             InitializeComponent();
-        }
-
-        private void ModifyPart_Load(object sender, EventArgs e)
-        {
-            var part = inventory.lookupPart(partID);
-
-            if (part.PartID != partID)
-            {
-                Close();
-                return;
-            }
-
-            partIdTextBox.Text = part.PartID.ToString();
-            partNameTextBox.Text = part.Name;
-            partInventoryNumericUpDown.Text = part.InStock.ToString();
-            partPriceTextBox.Text = part.Price.ToString();
-            partMaxNumericUpDown.Text = part.Max.ToString();
-            partMinNumericUpDown.Text = part.Min.ToString();
-
-            if (part is Outsourced outsourced)
-            {
-                partCompanyNameTextBox.Text = outsourced.CompanyName;
-                outsourcedRadioButton.Checked = true;
-            }
-            else if (part is Inhouse inhouse)
-            {
-                partMachineIdNumericUpDown.Text = inhouse.MachineID.ToString();
-                inHouseRadioButton.Checked = true;
-            }
-
-            radioButton_CheckedChanged(this, new EventArgs());
         }
 
         protected bool IsFormValid()
@@ -77,6 +50,38 @@ namespace JasonNealC968
             return validators.Validate();
         }
 
+        /***********************
+         * Form Event Handlers *
+         ***********************/
+
+        protected void ModifyPart_Load(object sender, EventArgs e)
+        {
+            partFormLabel.Text = part.PartID > 0 ? "Modify Part" : "Add Part";
+            partIdTextBox.Text = part.PartID > 0 ? part.PartID.ToString() : string.Empty;
+            partNameTextBox.Text = part.Name;
+            partInventoryNumericUpDown.Text = part.InStock.ToString();
+            partPriceTextBox.Text = part.Price > 0 ? part.Price.ToString() : string.Empty;
+            partMaxNumericUpDown.Text = part.Max.ToString();
+            partMinNumericUpDown.Text = part.Min.ToString();
+
+            if (part is Outsourced outsourced)
+            {
+                partCompanyNameTextBox.Text = outsourced.CompanyName;
+                outsourcedRadioButton.Checked = true;
+            }
+            else if (part is Inhouse inhouse)
+            {
+                partMachineIdNumericUpDown.Text = inhouse.MachineID.ToString();
+                inHouseRadioButton.Checked = true;
+            }
+
+            radioButton_CheckedChanged(this, new EventArgs());
+        }
+
+        /*************************
+         * Button Event Handlers *
+         *************************/
+
         protected void partCancelButton_Click(object sender, EventArgs e)
         {
             Close();
@@ -84,6 +89,7 @@ namespace JasonNealC968
 
         protected void partSaveButton_Click(object sender, EventArgs e)
         {
+            // Can't use existing part because it may be the wrong type
             Part newPart = outsourcedRadioButton.Checked
                 ? new Outsourced() { CompanyName = partCompanyNameTextBox.Text }
                 : new Inhouse() { MachineID = Convert.ToInt32(partMachineIdNumericUpDown.Text) };
@@ -98,6 +104,10 @@ namespace JasonNealC968
             inventory.updatePart(partID, newPart);
             Close();
         }
+
+        /***********************
+         * Form Event Handlers *
+         ***********************/
 
         protected void textBox_TextChanged(object sender, EventArgs e)
         {

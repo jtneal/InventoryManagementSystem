@@ -1,6 +1,6 @@
 ﻿namespace JasonNealC968
 {
-    partial class ModifyPart
+    partial class PartForm
     {
         /// <summary>
         /// Required designer variable.
@@ -47,7 +47,7 @@
             partIdTextBox = new TextBox();
             outsourcedRadioButton = new RadioButton();
             inHouseRadioButton = new RadioButton();
-            addPartLabel = new Label();
+            partFormLabel = new Label();
             partMachineIdNumericUpDown = new NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)partMinNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)partMaxNumericUpDown).BeginInit();
@@ -59,7 +59,7 @@
             // 
             partMinNumericUpDown.Font = new Font("Segoe UI", 12F);
             partMinNumericUpDown.Location = new Point(436, 264);
-            partMinNumericUpDown.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
+            partMinNumericUpDown.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
             partMinNumericUpDown.Name = "partMinNumericUpDown";
             partMinNumericUpDown.Size = new Size(119, 29);
             partMinNumericUpDown.TabIndex = 42;
@@ -69,7 +69,7 @@
             // 
             partMaxNumericUpDown.Font = new Font("Segoe UI", 12F);
             partMaxNumericUpDown.Location = new Point(209, 264);
-            partMaxNumericUpDown.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
+            partMaxNumericUpDown.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
             partMaxNumericUpDown.Name = "partMaxNumericUpDown";
             partMaxNumericUpDown.Size = new Size(119, 29);
             partMaxNumericUpDown.TabIndex = 41;
@@ -79,7 +79,7 @@
             // 
             partInventoryNumericUpDown.Font = new Font("Segoe UI", 12F);
             partInventoryNumericUpDown.Location = new Point(209, 173);
-            partInventoryNumericUpDown.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
+            partInventoryNumericUpDown.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
             partInventoryNumericUpDown.Name = "partInventoryNumericUpDown";
             partInventoryNumericUpDown.Size = new Size(183, 29);
             partInventoryNumericUpDown.TabIndex = 40;
@@ -277,30 +277,32 @@
             inHouseRadioButton.UseVisualStyleBackColor = true;
             inHouseRadioButton.CheckedChanged += radioButton_CheckedChanged;
             // 
-            // addPartLabel
+            // partFormLabel
             // 
-            addPartLabel.AutoSize = true;
-            addPartLabel.Font = new Font("Segoe UI", 12F);
-            addPartLabel.Location = new Point(16, 21);
-            addPartLabel.Margin = new Padding(4, 0, 4, 0);
-            addPartLabel.Name = "addPartLabel";
-            addPartLabel.Size = new Size(90, 21);
-            addPartLabel.TabIndex = 22;
-            addPartLabel.Text = "Modify Part";
+            partFormLabel.AutoSize = true;
+            partFormLabel.Font = new Font("Segoe UI", 12F);
+            partFormLabel.Location = new Point(16, 21);
+            partFormLabel.Margin = new Padding(4, 0, 4, 0);
+            partFormLabel.Name = "partFormLabel";
+            partFormLabel.Size = new Size(90, 21);
+            partFormLabel.TabIndex = 22;
+            partFormLabel.Text = "Modify Part";
             // 
             // partMachineIdNumericUpDown
             // 
             partMachineIdNumericUpDown.Font = new Font("Segoe UI", 12F);
             partMachineIdNumericUpDown.Location = new Point(209, 309);
+            partMachineIdNumericUpDown.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
             partMachineIdNumericUpDown.Name = "partMachineIdNumericUpDown";
             partMachineIdNumericUpDown.Size = new Size(183, 29);
             partMachineIdNumericUpDown.TabIndex = 43;
             partMachineIdNumericUpDown.ValueChanged += textBox_TextChanged;
             // 
-            // ModifyPart
+            // PartForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            CancelButton = partCancelButton;
             ClientSize = new Size(581, 467);
             Controls.Add(partMachineIdNumericUpDown);
             Controls.Add(partMinNumericUpDown);
@@ -322,8 +324,8 @@
             Controls.Add(partIdTextBox);
             Controls.Add(outsourcedRadioButton);
             Controls.Add(inHouseRadioButton);
-            Controls.Add(addPartLabel);
-            Name = "ModifyPart";
+            Controls.Add(partFormLabel);
+            Name = "PartForm";
             Text = "Part";
             Load += ModifyPart_Load;
             ((System.ComponentModel.ISupportInitialize)partMinNumericUpDown).EndInit();
@@ -355,7 +357,7 @@
         private TextBox partIdTextBox;
         private RadioButton outsourcedRadioButton;
         private RadioButton inHouseRadioButton;
-        private Label addPartLabel;
+        private Label partFormLabel;
         private NumericUpDown partMachineIdNumericUpDown;
     }
 }

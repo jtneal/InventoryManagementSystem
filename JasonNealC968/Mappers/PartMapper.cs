@@ -82,11 +82,13 @@ namespace JasonNealC968.Mappers
                 ? new Outsourced() { CompanyName = partEntity.CompanyName! }
                 : new Inhouse() { MachineID = (int)partEntity.MachineID! };
 
+            part.PartID = partEntity.PartID;
             part.Name = partEntity.Name;
             part.InStock = partEntity.InStock;
             part.Price = partEntity.Price;
             part.Min = partEntity.Min;
             part.Max = partEntity.Max;
+            part.Category = partEntity.Category;
 
             return part;
         }

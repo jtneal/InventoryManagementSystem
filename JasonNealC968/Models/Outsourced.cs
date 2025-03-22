@@ -8,6 +8,6 @@ namespace JasonNealC968.Models
 {
     public class Outsourced : Part
     {
-        public required string CompanyName { get; set; }
+        public string CompanyName { get; set; } = string.Empty;
     }
 }
