@@ -121,5 +121,10 @@ namespace JasonNealC968.DAL
             context.Parts.Update(PartMapper.HydratePartEntity(partEntity, part));
             context.SaveChanges();
         }
+
+        public bool isPartAssociated(int partID)
+        {
+            return context.ProductParts.Any(x => x.PartID == partID);
+        }
     }
 }

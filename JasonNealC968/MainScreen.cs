@@ -118,6 +118,12 @@ namespace JasonNealC968
 
             var part = inventory!.lookupPart(partID);
 
+            if (inventory!.isPartAssociated(partID))
+            {
+                MessageBox.Show("Parts associated to products cannot be deleted.", "Error");
+                return;
+            }
+
             var confirm = MessageBox.Show(
                 $"Are you sure you want to delete this part?\n\nPart ID: {part.PartID}\nPart Name: {part.Name}", "Are you sure?",
                 MessageBoxButtons.YesNo);

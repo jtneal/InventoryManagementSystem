@@ -12,6 +12,12 @@
                 isValid = false;
             }
 
+            if (min.Value > max.Value)
+            {
+                min.BackColor = Color.LightCoral;
+                isValid = false;
+            }
+
             return isValid;
         }
     }
