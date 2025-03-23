@@ -1,12 +1,7 @@
 ﻿using JasonNealC968.Constants;
 using JasonNealC968.DAL;
 using JasonNealC968.Models;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JasonNealC968.Mappers
 {
@@ -47,7 +42,7 @@ namespace JasonNealC968.Mappers
                 InStock = part.InStock,
                 Min = part.Min,
                 Max = part.Max,
-                Category = "",
+                Category = string.Empty,
             };
 
             if (part is Outsourced outsourced)
@@ -69,9 +64,7 @@ namespace JasonNealC968.Mappers
             var parts = new BindingList<Part>();
 
             foreach (var part in partEntities)
-            {
                 parts.Add(ToPartModel(part));
-            }
 
             return parts;
         }

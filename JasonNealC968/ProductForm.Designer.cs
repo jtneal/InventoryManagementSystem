@@ -89,7 +89,7 @@
             candidatesSearchButton.TabIndex = 3;
             candidatesSearchButton.Text = "Search";
             candidatesSearchButton.UseVisualStyleBackColor = false;
-            candidatesSearchButton.Click += candidatesSearchButton_Click;
+            candidatesSearchButton.Click += CandidatesSearchButton_Click;
             // 
             // candidatesLabel
             // 
@@ -158,7 +158,7 @@
             candidatesAddButton.TabIndex = 16;
             candidatesAddButton.Text = "Add";
             candidatesAddButton.UseVisualStyleBackColor = false;
-            candidatesAddButton.Click += associatedAddButton_Click;
+            candidatesAddButton.Click += AssociatedAddButton_Click;
             // 
             // associatedDeleteButton
             // 
@@ -171,7 +171,7 @@
             associatedDeleteButton.TabIndex = 17;
             associatedDeleteButton.Text = "Delete";
             associatedDeleteButton.UseVisualStyleBackColor = false;
-            associatedDeleteButton.Click += associatedDeleteButton_Click;
+            associatedDeleteButton.Click += AssociatedDeleteButton_Click;
             // 
             // cancelButton
             // 
@@ -184,7 +184,7 @@
             cancelButton.TabIndex = 18;
             cancelButton.Text = "Cancel";
             cancelButton.UseVisualStyleBackColor = false;
-            cancelButton.Click += cancelButton_Click;
+            cancelButton.Click += CancelButton_Click;
             // 
             // saveButton
             // 
@@ -198,7 +198,7 @@
             saveButton.TabIndex = 19;
             saveButton.Text = "Save";
             saveButton.UseVisualStyleBackColor = false;
-            saveButton.Click += saveButton_Click;
+            saveButton.Click += SaveButton_Click;
             // 
             // productMinNumericUpDown
             // 
@@ -208,7 +208,7 @@
             productMinNumericUpDown.Name = "productMinNumericUpDown";
             productMinNumericUpDown.Size = new Size(119, 29);
             productMinNumericUpDown.TabIndex = 33;
-            productMinNumericUpDown.ValueChanged += textBox_TextChanged;
+            productMinNumericUpDown.ValueChanged += Control_Changed;
             // 
             // productMaxNumericUpDown
             // 
@@ -218,7 +218,7 @@
             productMaxNumericUpDown.Name = "productMaxNumericUpDown";
             productMaxNumericUpDown.Size = new Size(119, 29);
             productMaxNumericUpDown.TabIndex = 32;
-            productMaxNumericUpDown.ValueChanged += textBox_TextChanged;
+            productMaxNumericUpDown.ValueChanged += Control_Changed;
             // 
             // productInventoryNumericUpDown
             // 
@@ -228,7 +228,7 @@
             productInventoryNumericUpDown.Name = "productInventoryNumericUpDown";
             productInventoryNumericUpDown.Size = new Size(183, 29);
             productInventoryNumericUpDown.TabIndex = 31;
-            productInventoryNumericUpDown.ValueChanged += textBox_TextChanged;
+            productInventoryNumericUpDown.ValueChanged += Control_Changed;
             // 
             // productMinLabel
             // 
@@ -306,7 +306,7 @@
             productPriceTextBox.Name = "productPriceTextBox";
             productPriceTextBox.Size = new Size(183, 27);
             productPriceTextBox.TabIndex = 24;
-            productPriceTextBox.TextChanged += textBox_TextChanged;
+            productPriceTextBox.TextChanged += Control_Changed;
             // 
             // productNameTextBox
             // 
@@ -319,7 +319,7 @@
             productNameTextBox.Name = "productNameTextBox";
             productNameTextBox.Size = new Size(183, 27);
             productNameTextBox.TabIndex = 23;
-            productNameTextBox.TextChanged += textBox_TextChanged;
+            productNameTextBox.TextChanged += Control_Changed;
             // 
             // productIdTextBox
             // 

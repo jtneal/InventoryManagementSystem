@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace JasonNealC968.Models
 {
@@ -11,7 +6,7 @@ namespace JasonNealC968.Models
     {
         public BindingList<Part> AssociatedParts { get; set; } = [];
         public int ProductID { get; set; }
-        public string Name { get; set; } = "";
+        public string Name { get; set; } = string.Empty;
         public decimal Price { get; set; }
         public int InStock { get; set; }
         public int Min { get; set; }
@@ -31,14 +26,7 @@ namespace JasonNealC968.Models
 
         public Part lookupAssociatedPart(int partID)
         {
-            var part = AssociatedParts.First((x) => x.PartID == partID);
-
-            if (part is null)
-            {
-                throw new ArgumentException();
-            }
-
-            return part;
+            return AssociatedParts.First(x => x.PartID == partID);
         }
     }
 }

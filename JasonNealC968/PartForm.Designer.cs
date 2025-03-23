@@ -63,7 +63,7 @@
             partMinNumericUpDown.Name = "partMinNumericUpDown";
             partMinNumericUpDown.Size = new Size(119, 29);
             partMinNumericUpDown.TabIndex = 42;
-            partMinNumericUpDown.ValueChanged += textBox_TextChanged;
+            partMinNumericUpDown.ValueChanged += Control_Changed;
             // 
             // partMaxNumericUpDown
             // 
@@ -73,7 +73,7 @@
             partMaxNumericUpDown.Name = "partMaxNumericUpDown";
             partMaxNumericUpDown.Size = new Size(119, 29);
             partMaxNumericUpDown.TabIndex = 41;
-            partMaxNumericUpDown.ValueChanged += textBox_TextChanged;
+            partMaxNumericUpDown.ValueChanged += Control_Changed;
             // 
             // partInventoryNumericUpDown
             // 
@@ -83,7 +83,7 @@
             partInventoryNumericUpDown.Name = "partInventoryNumericUpDown";
             partInventoryNumericUpDown.Size = new Size(183, 29);
             partInventoryNumericUpDown.TabIndex = 40;
-            partInventoryNumericUpDown.ValueChanged += textBox_TextChanged;
+            partInventoryNumericUpDown.ValueChanged += Control_Changed;
             // 
             // partCancelButton
             // 
@@ -96,7 +96,7 @@
             partCancelButton.TabIndex = 32;
             partCancelButton.Text = "Cancel";
             partCancelButton.UseVisualStyleBackColor = true;
-            partCancelButton.Click += partCancelButton_Click;
+            partCancelButton.Click += PartCancelButton_Click;
             // 
             // partSaveButton
             // 
@@ -110,7 +110,7 @@
             partSaveButton.TabIndex = 30;
             partSaveButton.Text = "Save";
             partSaveButton.UseVisualStyleBackColor = true;
-            partSaveButton.Click += partSaveButton_Click;
+            partSaveButton.Click += PartSaveButton_Click;
             // 
             // partCompanyNameLabel
             // 
@@ -134,7 +134,7 @@
             partCompanyNameTextBox.Size = new Size(183, 27);
             partCompanyNameTextBox.TabIndex = 29;
             partCompanyNameTextBox.Visible = false;
-            partCompanyNameTextBox.TextChanged += textBox_TextChanged;
+            partCompanyNameTextBox.TextChanged += Control_Changed;
             // 
             // partMinLabel
             // 
@@ -224,7 +224,7 @@
             partPriceTextBox.Name = "partPriceTextBox";
             partPriceTextBox.Size = new Size(183, 27);
             partPriceTextBox.TabIndex = 27;
-            partPriceTextBox.TextChanged += textBox_TextChanged;
+            partPriceTextBox.TextChanged += Control_Changed;
             // 
             // partNameTextBox
             // 
@@ -237,7 +237,7 @@
             partNameTextBox.Name = "partNameTextBox";
             partNameTextBox.Size = new Size(183, 27);
             partNameTextBox.TabIndex = 26;
-            partNameTextBox.TextChanged += textBox_TextChanged;
+            partNameTextBox.TextChanged += Control_Changed;
             // 
             // partIdTextBox
             // 
@@ -262,7 +262,7 @@
             outsourcedRadioButton.TabIndex = 24;
             outsourcedRadioButton.Text = "Outsourced";
             outsourcedRadioButton.UseVisualStyleBackColor = true;
-            outsourcedRadioButton.CheckedChanged += radioButton_CheckedChanged;
+            outsourcedRadioButton.CheckedChanged += Control_Changed;
             // 
             // inHouseRadioButton
             // 
@@ -275,7 +275,7 @@
             inHouseRadioButton.TabIndex = 23;
             inHouseRadioButton.Text = "In-House";
             inHouseRadioButton.UseVisualStyleBackColor = true;
-            inHouseRadioButton.CheckedChanged += radioButton_CheckedChanged;
+            inHouseRadioButton.CheckedChanged += Control_Changed;
             // 
             // partFormLabel
             // 
@@ -296,7 +296,7 @@
             partMachineIdNumericUpDown.Name = "partMachineIdNumericUpDown";
             partMachineIdNumericUpDown.Size = new Size(183, 29);
             partMachineIdNumericUpDown.TabIndex = 43;
-            partMachineIdNumericUpDown.ValueChanged += textBox_TextChanged;
+            partMachineIdNumericUpDown.ValueChanged += Control_Changed;
             // 
             // PartForm
             // 

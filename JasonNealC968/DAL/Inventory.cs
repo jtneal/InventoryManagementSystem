@@ -1,36 +1,22 @@
-﻿using JasonNealC968.Constants;
-using JasonNealC968.Mappers;
+﻿using JasonNealC968.Mappers;
 using JasonNealC968.Models;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JasonNealC968.DAL
 {
-    public class Inventory
+    public class Inventory(InventoryContext context)
     {
         public BindingList<Product> Products = [];
         public BindingList<Part> AllParts = [];
-        private InventoryContext context;
-
-        public Inventory(InventoryContext context)
-        {
-            this.context = context;
-        }
 
         public void addProduct(Product product)
         {
-            context.Products.Add(new ProductEntity()
-            {
-                Name = product.Name,
-                Price = product.Price,
-                InStock = product.InStock,
-                Min = product.Min,
-                Max = product.Max,
-            });
+            var newParts = product.AssociatedParts
+                .Select(x => new ProductPartsEntity { PartID = x.PartID, ProductID = product.ProductID })
+                .ToList();
+
+            context.ProductParts.AddRange(newParts);
+            context.Products.Add(ProductMapper.HydrateProductEntity(new ProductEntity(), product));
             context.SaveChanges();
         }
 
@@ -49,20 +35,21 @@ namespace JasonNealC968.DAL
 
         public Product lookupProduct(int productID)
         {
-            var product = new Product();
             var productEntity = context.Products.Find(productID);
 
             if (productEntity is not null)
             {
-                product.ProductID = productEntity.ProductID;
-                product.Name = productEntity.Name;
-                product.Price = productEntity.Price;
-                product.InStock = productEntity.InStock;
-                product.Min = productEntity.Min;
-                product.Max = productEntity.Max;
+                var product = ProductMapper.ToProductModel(productEntity);
+
+                product.AssociatedParts = new BindingList<Part>(productEntity.AssociatedParts
+                    .Select(ap => PartMapper.ToPartModel(context.Parts.First(p => p.PartID == ap.PartID)))
+                    .ToList());
+
+                return product;
             }
 
-            return product;
+
+            return new Product();
         }
 
         public void updateProduct(int productID, Product product)
@@ -76,14 +63,17 @@ namespace JasonNealC968.DAL
                 return;
             }
 
-            productEntity.ProductID = product.ProductID;
-            productEntity.Name = product.Name;
-            productEntity.Price = product.Price;
-            productEntity.InStock = product.InStock;
-            productEntity.Min = product.Min;
-            productEntity.Max = product.Max;
+            var currentParts = context.ProductParts.Where(x => x.ProductID == productID).ToList();
 
-            context.Products.Update(productEntity);
+            var newParts = product.AssociatedParts.Select(x => new ProductPartsEntity
+            {
+                PartID = x.PartID,
+                ProductID = productID,
+            }).ToList();
+
+            context.Products.Update(ProductMapper.HydrateProductEntity(productEntity, product));
+            context.ProductParts.RemoveRange(currentParts);
+            context.ProductParts.AddRange(newParts);
             context.SaveChanges();
         }
 
@@ -111,21 +101,7 @@ namespace JasonNealC968.DAL
             var partEntity = context.Parts.Find(partID);
 
             if (partEntity is not null)
-            {
-                Part part = partEntity.Category == PartCategory.Outsourced
-                    ? new Outsourced() { CompanyName = partEntity.CompanyName ?? string.Empty }
-                    : new Inhouse() { MachineID = partEntity.MachineID ?? 0 };
-
-                part.PartID = partEntity.PartID;
-                part.Name = partEntity.Name;
-                part.Price = partEntity.Price;
-                part.InStock = partEntity.InStock;
-                part.Min = partEntity.Min;
-                part.Max = partEntity.Max;
-                part.Category = partEntity.Category;
-
-                return part;
-            }
+                return PartMapper.ToPartModel(partEntity);
 
             // We default the category to inhouse for new parts
             return new Inhouse();

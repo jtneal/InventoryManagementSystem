@@ -1,13 +1,9 @@
 using JasonNealC968.DAL;
 using JasonNealC968.Mappers;
+using JasonNealC968.Utilities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JasonNealC968
 {
@@ -36,12 +32,18 @@ namespace JasonNealC968
             var parts = context.Parts.Local.ToBindingList();
             var products = context.Products.Local.ToBindingList();
 
-            inventory = new Inventory(context);
-            inventory.AllParts = PartMapper.ToPartModels(parts);
-            inventory.Products = ProductMapper.ToProductModels(products);
+            inventory = new Inventory(context)
+            {
+                AllParts = PartMapper.ToPartModels(parts),
+                Products = ProductMapper.ToProductModels(products),
+            };
 
             partsDataGridView.DataSource = parts;
             productsDataGridView.DataSource = products;
+
+            partsDataGridView.Columns["Category"].Visible = false;
+            partsDataGridView.Columns["CompanyName"].Visible = false;
+            partsDataGridView.Columns["MachineID"].Visible = false;
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -56,90 +58,63 @@ namespace JasonNealC968
          * Button Event Handlers *
          *************************/
 
-        protected void partsSearchButton_Click(object sender, EventArgs e)
+        protected void PartsSearchButton_Click(object sender, EventArgs e)
         {
-            partsDataGridView.DataSource = context!.Parts.Where(part
-                => EF.Functions.Like(part.Name, $"%{partsSearchTextBox.Text}%")).ToList();
+            partsDataGridView.DataSource = inventory!.AllParts.Where(part
+               => part.Name.Contains(partsSearchTextBox.Text)).ToList();
         }
 
-        protected void productsSearchButton_Click(object sender, EventArgs e)
+        protected void ProductsSearchButton_Click(object sender, EventArgs e)
         {
-            productsDataGridView.DataSource = context!.Products.Where(product
-                => EF.Functions.Like(product.Name, $"%{productsSearchTextBox.Text}%")).ToList();
+            productsDataGridView.DataSource = inventory!.Products.Where(product
+                => product.Name.Contains(productsSearchTextBox.Text)).ToList();
         }
 
-        protected void partsAddButton_Click(object sender, EventArgs e)
+        protected void PartsAddButton_Click(object sender, EventArgs e)
         {
             var partForm = new PartForm(inventory!);
             partForm.ShowDialog();
         }
 
-        protected void productsAddButton_Click(object sender, EventArgs e)
+        protected void ProductsAddButton_Click(object sender, EventArgs e)
         {
             var productForm = new ProductForm(inventory!);
             productForm.ShowDialog();
         }
 
-        protected void partsModifyButton_Click(object sender, EventArgs e)
+        protected void PartsModifyButton_Click(object sender, EventArgs e)
         {
-            if (partsDataGridView.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Please select a row to modify.", "No Row Selected");
+            var accessor = new DataGridViewAccessor(partsDataGridView);
+            var partID = accessor.GetSelectedInt("PartID");
+
+            if (partID == 0)
                 return;
-            }
 
-            var selectedRow = partsDataGridView.SelectedRows[0];
-            var partID = selectedRow.Cells["PartID"].Value.ToString();
-
-            if (partID is null)
-            {
-                MessageBox.Show("Please select a row with a valid PartID.", "Part ID Not Found");
-                return;
-            }
-
-            var partForm = new PartForm(inventory!, int.Parse(partID));
+            var partForm = new PartForm(inventory!, partID);
             partForm.ShowDialog();
         }
 
-        protected void productsModifyButton_Click(object sender, EventArgs e)
+        protected void ProductsModifyButton_Click(object sender, EventArgs e)
         {
-            if (productsDataGridView.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Please select a row to modify.", "No Row Selected");
+            var accessor = new DataGridViewAccessor(productsDataGridView);
+            var productID = accessor.GetSelectedInt("ProductID");
+
+            if (productID == 0)
                 return;
-            }
 
-            var selectedRow = productsDataGridView.SelectedRows[0];
-            var productID = selectedRow.Cells["ProductID"].Value.ToString();
-
-            if (productID is null)
-            {
-                MessageBox.Show("Please select a row with a valid ProductID.", "Product ID Not Found");
-                return;
-            }
-
-            var productForm = new ProductForm(inventory!, int.Parse(productID));
+            var productForm = new ProductForm(inventory!, productID);
             productForm.ShowDialog();
         }
 
-        protected void partsDeleteButton_Click(object sender, EventArgs e)
+        protected void PartsDeleteButton_Click(object sender, EventArgs e)
         {
-            if (partsDataGridView.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Please select a row to delete.", "No Row Selected");
+            var accessor = new DataGridViewAccessor(partsDataGridView);
+            var partID = accessor.GetSelectedInt("PartID");
+
+            if (partID == 0)
                 return;
-            }
 
-            var selectedRow = partsDataGridView.SelectedRows[0];
-            var partID = selectedRow.Cells["PartID"].Value.ToString();
-
-            if (partID is null)
-            {
-                MessageBox.Show("Please select a row with a valid PartID.", "Part ID Not Found");
-                return;
-            }
-
-            var part = inventory!.lookupPart(int.Parse(partID));
+            var part = inventory!.lookupPart(partID);
 
             var confirm = MessageBox.Show(
                 $"Are you sure you want to delete this part?\n\nPart ID: {part.PartID}\nPart Name: {part.Name}", "Are you sure?",
@@ -149,24 +124,15 @@ namespace JasonNealC968
                 inventory!.deletePart(part);
         }
 
-        protected void productsDeleteButton_Click(object sender, EventArgs e)
+        protected void ProductsDeleteButton_Click(object sender, EventArgs e)
         {
-            if (productsDataGridView.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Please select a row to delete.", "No Row Selected");
+            var accessor = new DataGridViewAccessor(productsDataGridView);
+            var productID = accessor.GetSelectedInt("ProductID");
+
+            if (productID == 0)
                 return;
-            }
 
-            var selectedRow = productsDataGridView.SelectedRows[0];
-            var productID = selectedRow.Cells["ProductID"].Value.ToString();
-
-            if (productID is null)
-            {
-                MessageBox.Show("Please select a row with a valid ProductID.", "Product ID Not Found");
-                return;
-            }
-
-            var product = inventory!.lookupProduct(int.Parse(productID));
+            var product = inventory!.lookupProduct(productID);
 
             var confirm = MessageBox.Show(
                 $"Are you sure you want to delete this product?\n\nProduct ID: {product.ProductID}\nProduct Name: {product.Name}", "Are you sure?",
@@ -176,7 +142,7 @@ namespace JasonNealC968
                 inventory!.removeProduct(product.ProductID);
         }
 
-        protected void exitButton_Click(object sender, EventArgs e)
+        protected void ExitButton_Click(object sender, EventArgs e)
         {
             Close();
         }

@@ -69,7 +69,7 @@
             partsSearchButton.TabIndex = 1;
             partsSearchButton.Text = "Search";
             partsSearchButton.UseVisualStyleBackColor = false;
-            partsSearchButton.Click += partsSearchButton_Click;
+            partsSearchButton.Click += PartsSearchButton_Click;
             // 
             // partsSearchTextBox
             // 
@@ -95,39 +95,39 @@
             partsDeleteButton.BackColor = Color.LightGray;
             partsDeleteButton.FlatStyle = FlatStyle.Flat;
             partsDeleteButton.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            partsDeleteButton.Location = new Point(551, 339);
+            partsDeleteButton.Location = new Point(552, 339);
             partsDeleteButton.Name = "partsDeleteButton";
             partsDeleteButton.Size = new Size(71, 36);
             partsDeleteButton.TabIndex = 1;
             partsDeleteButton.Text = "Delete";
             partsDeleteButton.UseVisualStyleBackColor = false;
-            partsDeleteButton.Click += partsDeleteButton_Click;
+            partsDeleteButton.Click += PartsDeleteButton_Click;
             // 
             // partsModifyButton
             // 
             partsModifyButton.BackColor = Color.LightGray;
             partsModifyButton.FlatStyle = FlatStyle.Flat;
             partsModifyButton.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            partsModifyButton.Location = new Point(468, 339);
+            partsModifyButton.Location = new Point(469, 339);
             partsModifyButton.Name = "partsModifyButton";
             partsModifyButton.Size = new Size(71, 36);
             partsModifyButton.TabIndex = 1;
             partsModifyButton.Text = "Modify";
             partsModifyButton.UseVisualStyleBackColor = false;
-            partsModifyButton.Click += partsModifyButton_Click;
+            partsModifyButton.Click += PartsModifyButton_Click;
             // 
             // partsAddButton
             // 
             partsAddButton.BackColor = Color.LightGray;
             partsAddButton.FlatStyle = FlatStyle.Flat;
             partsAddButton.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            partsAddButton.Location = new Point(385, 339);
+            partsAddButton.Location = new Point(386, 339);
             partsAddButton.Name = "partsAddButton";
             partsAddButton.Size = new Size(71, 36);
             partsAddButton.TabIndex = 1;
             partsAddButton.Text = "Add";
             partsAddButton.UseVisualStyleBackColor = false;
-            partsAddButton.Click += partsAddButton_Click;
+            partsAddButton.Click += PartsAddButton_Click;
             // 
             // partsDataGridView
             // 
@@ -143,7 +143,7 @@
             partsDataGridView.RowHeadersVisible = false;
             partsDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             partsDataGridView.ShowEditingIcon = false;
-            partsDataGridView.Size = new Size(602, 222);
+            partsDataGridView.Size = new Size(603, 222);
             partsDataGridView.TabIndex = 4;
             // 
             // productsDataGridView
@@ -193,7 +193,7 @@
             productsAddButton.TabIndex = 5;
             productsAddButton.Text = "Add";
             productsAddButton.UseVisualStyleBackColor = false;
-            productsAddButton.Click += productsAddButton_Click;
+            productsAddButton.Click += ProductsAddButton_Click;
             // 
             // productsModifyButton
             // 
@@ -206,7 +206,7 @@
             productsModifyButton.TabIndex = 6;
             productsModifyButton.Text = "Modify";
             productsModifyButton.UseVisualStyleBackColor = false;
-            productsModifyButton.Click += productsModifyButton_Click;
+            productsModifyButton.Click += ProductsModifyButton_Click;
             // 
             // productsDeleteButton
             // 
@@ -219,7 +219,7 @@
             productsDeleteButton.TabIndex = 7;
             productsDeleteButton.Text = "Delete";
             productsDeleteButton.UseVisualStyleBackColor = false;
-            productsDeleteButton.Click += productsDeleteButton_Click;
+            productsDeleteButton.Click += ProductsDeleteButton_Click;
             // 
             // productsSearchButton
             // 
@@ -232,7 +232,7 @@
             productsSearchButton.TabIndex = 8;
             productsSearchButton.Text = "Search";
             productsSearchButton.UseVisualStyleBackColor = false;
-            productsSearchButton.Click += productsSearchButton_Click;
+            productsSearchButton.Click += ProductsSearchButton_Click;
             // 
             // exitButton
             // 
@@ -245,7 +245,7 @@
             exitButton.TabIndex = 12;
             exitButton.Text = "Exit";
             exitButton.UseVisualStyleBackColor = false;
-            exitButton.Click += exitButton_Click;
+            exitButton.Click += ExitButton_Click;
             // 
             // MainScreen
             // 

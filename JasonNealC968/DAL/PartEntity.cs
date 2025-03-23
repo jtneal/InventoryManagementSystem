@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JasonNealC968.DAL
 {
@@ -12,13 +7,13 @@ namespace JasonNealC968.DAL
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public required int PartID { get; set; }
-        public required string Name { get; set; }
-        public required decimal Price { get; set; }
-        public required int InStock { get; set; }
-        public required int Min { get; set; }
-        public required int Max { get; set; }
-        public required string Category { get; set; }
+        public int PartID { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public decimal Price { get; set; }
+        public int InStock { get; set; }
+        public int Min { get; set; }
+        public int Max { get; set; }
+        public string Category { get; set; } = string.Empty;
         public string? CompanyName { get; set; }
         public int? MachineID { get; set; }
     }

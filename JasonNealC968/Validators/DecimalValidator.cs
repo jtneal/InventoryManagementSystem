@@ -1,20 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace JasonNealC968.Validators
+﻿namespace JasonNealC968.Validators
 {
-    public class DecimalValidator : IValidator
+    public class DecimalValidator(Control[] controls) : IValidator
     {
-        private readonly Control[] controls;
-
-        public DecimalValidator(Control[] controls)
-        {
-            this.controls = controls;
-        }
-
         public bool Validate()
         {
             bool isValid = true;
