@@ -8,7 +8,6 @@
 
             if (string.IsNullOrEmpty(value))
             {
-                MessageBox.Show("Please select a row with an ID.", "ID Not Found");
                 return 0;
             }
 

@@ -252,6 +252,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Gainsboro;
+            CancelButton = exitButton;
             ClientSize = new Size(1287, 469);
             Controls.Add(exitButton);
             Controls.Add(productsDataGridView);
