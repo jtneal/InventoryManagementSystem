@@ -284,9 +284,9 @@
             partFormLabel.Location = new Point(16, 21);
             partFormLabel.Margin = new Padding(4, 0, 4, 0);
             partFormLabel.Name = "partFormLabel";
-            partFormLabel.Size = new Size(90, 21);
+            partFormLabel.Size = new Size(69, 21);
             partFormLabel.TabIndex = 22;
-            partFormLabel.Text = "Modify Part";
+            partFormLabel.Text = "Add Part";
             // 
             // partMachineIdNumericUpDown
             // 

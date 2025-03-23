@@ -60,14 +60,16 @@ namespace JasonNealC968
 
         protected void PartsSearchButton_Click(object sender, EventArgs e)
         {
-            partsDataGridView.DataSource = inventory!.AllParts.Where(part
-               => part.Name.Contains(partsSearchTextBox.Text)).ToList();
+            partsDataGridView.DataSource = inventory!.AllParts
+                .Where(part => part.Name.Contains(partsSearchTextBox.Text))
+                .ToList();
         }
 
         protected void ProductsSearchButton_Click(object sender, EventArgs e)
         {
-            productsDataGridView.DataSource = inventory!.Products.Where(product
-                => product.Name.Contains(productsSearchTextBox.Text)).ToList();
+            productsDataGridView.DataSource = inventory!.Products
+                .Where(product => product.Name.Contains(productsSearchTextBox.Text))
+                .ToList();
         }
 
         protected void PartsAddButton_Click(object sender, EventArgs e)
