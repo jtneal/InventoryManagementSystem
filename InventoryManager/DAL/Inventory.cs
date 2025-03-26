@@ -11,12 +11,16 @@ namespace JasonNealC968.DAL
 
         public void addProduct(Product product)
         {
+            var productEntity = ProductMapper.HydrateProductEntity(new ProductEntity(), product);
+
+            context.Products.Add(productEntity);
+            context.SaveChanges();
+
             var newParts = product.AssociatedParts
-                .Select(x => new ProductPartsEntity { PartID = x.PartID, ProductID = product.ProductID })
+                .Select(x => new ProductPartsEntity { PartID = x.PartID, ProductID = productEntity.ProductID })
                 .ToList();
 
             context.ProductParts.AddRange(newParts);
-            context.Products.Add(ProductMapper.HydrateProductEntity(new ProductEntity(), product));
             context.SaveChanges();
         }
 
